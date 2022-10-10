@@ -5,13 +5,13 @@ name = "pypi"
 
 [packages]
 peewee = "*"
-flask = "*"
 psycopg2 = "*"
 pymongo = "*"
 flask-pymongo = "*"
 dnspython = "*"
 flask-cors = "*"
 python-dotenv = "*"
+flask = {extras = ["async"], version = "*"}
 
 [dev-packages]
 
