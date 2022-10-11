@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, g, Response
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import pymongo, json, os, asyncio, requests
 from bson.json_util import dumps
 from dotenv import load_dotenv
@@ -13,6 +13,8 @@ DEBUG = True
 PORT = os.environ.get("PORT")
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 client = pymongo.MongoClient(db)
   
 # Database
@@ -38,6 +40,16 @@ async def findPunchline(var):
     output = jokes.find({'setup': var})
     return parse_json(output)[0]
 # routes here 
+
+# receive data
+@app.route('/receive', methods=['GET', 'POST'])
+#@cross_origin() what is this?
+async def setup():
+    data = request.form.get('keys')
+    print(data)
+    #print(request)
+    return jsonify(message = 'hello world')
+
 
 @app.route('/', methods=['GET'])
 def home_view():
@@ -68,12 +80,10 @@ async def dothething(setupInput):
     #print (sents[output.index(mostSimilar)],jokeReturn, mostSimilar*100)
     return f"I am {int(mostSimilar * 100)}% sure you meant {setup} and I already know that joke... {punchline}"
 
-# receive data
-@app.route('/receive', methods=['POST'])
-def setup():
-    data = request.form
-    return jsonify(data['setup'])
-# this receives data in form-data
+
+
+
+
 
 # Insert new joke
 @app.route('/insert-one/<setup>/<punchline>/', methods=['GET'])
