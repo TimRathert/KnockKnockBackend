@@ -5,7 +5,6 @@ from bson.json_util import dumps
 from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 import seed
-import asyncio
 
 load_dotenv()
 
