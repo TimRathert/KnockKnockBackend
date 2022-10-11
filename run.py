@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, g, Response
 from flask_cors import CORS
-import pymongo, json, requests, os, asyncio
+import pymongo, json, os, asyncio
 from bson.json_util import dumps
 from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
