@@ -12,6 +12,7 @@ dnspython = "*"
 flask-cors = "*"
 python-dotenv = "*"
 flask = {extras = ["async"], version = "*"}
+gunicorn = "*"
 
 [dev-packages]
 
