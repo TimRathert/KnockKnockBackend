@@ -41,14 +41,14 @@ async def findPunchline(var):
 # routes here 
 
 @app.route('/', methods=['GET'])
-def find():
-	thing = jokes.find({})
-	return parse_json(thing)
+def home_view():
+    return "<h1>Hello World!</h1>"
 
 # Get all jokes
 @app.route('/jokes', methods=['GET'])
-def goHam():
-    return ('howdy partner')
+def find():
+	thing = jokes.find({})
+	return parse_json(thing)
 
 # testing hugging face sentence transformer
 @app.route('/test/<setupInput>', methods=['GET'])
