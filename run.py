@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, g, Response
 from flask_cors import CORS
-import pymongo, json, os, asyncio
+import pymongo, json, os, asyncio, requests
 from bson.json_util import dumps
 from dotenv import load_dotenv
 import seed
@@ -72,7 +72,7 @@ async def dothething(setupInput):
 @app.route('/receive', methods=['POST'])
 def setup():
     data = request.form
-    return (data['setup'])
+    return jsonify(data['setup'])
 # this receives data in form-data
 
 # Insert new joke
