@@ -28,7 +28,7 @@ def parse_json(data):
 def query(payload):
     HF_API = os.environ.get('HF_API')
     API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2"
-    headers = ''
+    headers = {"Authorization": f"{ HF_API }"}
     response = requests.post(API_URL, headers=headers, json=payload)
     return response.json()
 
