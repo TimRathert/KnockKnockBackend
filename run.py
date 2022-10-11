@@ -3,7 +3,6 @@ from flask_cors import CORS
 import pymongo, json, os, asyncio
 from bson.json_util import dumps
 from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer
 import seed
 
 load_dotenv()

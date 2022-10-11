@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-peewee = "*"
 psycopg2 = "*"
 pymongo = "*"
 flask-pymongo = "*"
