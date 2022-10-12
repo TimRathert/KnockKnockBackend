@@ -55,7 +55,7 @@ async def setup():
     print(data)
     #print(request)
     return jsonify(message = 'hello world')
-    
+
 # Get all jokes
 @app.route('/jokes', methods=['GET'])
 def find():
@@ -63,7 +63,7 @@ def find():
 	return parse_json(thing)
 
 # testing hugging face sentence transformer
-@app.route('/test/<setupInput>', methods=['GET'])
+@app.route('/test/', methods=['GET'])
 async def dothething(setupInput):
     sents = await getAllSetups()
     output = query({
@@ -79,7 +79,7 @@ async def dothething(setupInput):
     setup = jokeReturn['setup']
     punchline = jokeReturn['punchline']
     #print (sents[output.index(mostSimilar)],jokeReturn, mostSimilar*100)
-    return f"I am {int(mostSimilar * 100)}% sure you meant {setup} and I already know that joke... {punchline}"
+    return jsonify(message = f"I am {int(mostSimilar * 100)}% sure you meant {setup} and I already know that joke... {punchline}")
 
 
 
