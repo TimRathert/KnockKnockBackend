@@ -12,7 +12,7 @@ DEBUG = True
 PORT = os.environ.get("PORT")
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 client = pymongo.MongoClient(db)
   
@@ -25,7 +25,7 @@ jokes = Database.jokes
 def parse_json(data):
 	return json.loads(dumps(data))
 
-def query(payload):
+async def query(payload):
     HF_API = os.environ.get('HF_API')
     API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2"
     headers = {"Authorization": f"{ HF_API }"}
@@ -61,34 +61,13 @@ def find():
 	thing = jokes.find({})
 	return parse_json(thing)
 
-# testing hugging face sentence transformer
-@app.route('/setup2', methods=['POST'])
-async def dothething():
-    sents = await getAllSetups()
-    data = request.form.get('setup')
-    output = query({
-	"inputs": {
-		"source_sentence": data,
-		"sentences": sents
-	    },
-    })
-    mostSimilar = max(output)
-    #if mostSimilar < .50:
-    #    return "I'm not sure about that..."
-    jokeReturn = await findPunchline(sents[output.index(mostSimilar)])
-    setup = jokeReturn['setup']
-    punchline = jokeReturn['punchline']
-    #print (sents[output.index(mostSimilar)],jokeReturn, mostSimilar*100)
-    return jsonify(message = f"I am {int(mostSimilar * 100)}% sure you meant {setup} and I already know that joke... {punchline}")
-
-# with cross origin
-# testing hugging face sentence transformer
+# does the heavy lifting of matchin setups to db
 @app.route('/setup', methods=['POST'])
-@cross_origin()
+#@cross_origin()
 async def dothething():
     sents = await getAllSetups()
     data = request.form.get('setup')
-    output = query({
+    output = await query({
 	"inputs": {
 		"source_sentence": data,
 		"sentences": sents
@@ -102,9 +81,6 @@ async def dothething():
     punchline = jokeReturn['punchline']
     #print (sents[output.index(mostSimilar)],jokeReturn, mostSimilar*100)
     return jsonify(message = f"I am {int(mostSimilar * 100)}% sure you meant {setup} and I already know that joke... {punchline}")
-
-
-
 
 
 
