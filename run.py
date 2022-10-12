@@ -66,10 +66,11 @@ def find():
 #@cross_origin()
 async def dothething():
     sents = await getAllSetups()
-    data = request.form.get('setup')
+    data = request.get_json(force=True)
+    #print(data['setup'])
     output = await query({
 	"inputs": {
-		"source_sentence": data,
+		"source_sentence": data['setup'],
 		"sentences": sents
 	    },
     })
@@ -80,7 +81,8 @@ async def dothething():
     setup = jokeReturn['setup']
     punchline = jokeReturn['punchline']
     #print (sents[output.index(mostSimilar)],jokeReturn, mostSimilar*100)
-    return jsonify(message = f"I am {int(mostSimilar * 100)}% sure you meant {setup} and I already know that joke... {punchline}")
+    outString = f"I am {int(mostSimilar * 100)}% sure you meant {setup} and I already know that joke... {punchline}"
+    return jsonify(message = outString)
 
 
 
