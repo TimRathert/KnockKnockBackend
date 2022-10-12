@@ -62,7 +62,29 @@ def find():
 	return parse_json(thing)
 
 # testing hugging face sentence transformer
+@app.route('/setup2', methods=['POST'])
+async def dothething():
+    sents = await getAllSetups()
+    data = request.form.get('setup')
+    output = query({
+	"inputs": {
+		"source_sentence": data,
+		"sentences": sents
+	    },
+    })
+    mostSimilar = max(output)
+    #if mostSimilar < .50:
+    #    return "I'm not sure about that..."
+    jokeReturn = await findPunchline(sents[output.index(mostSimilar)])
+    setup = jokeReturn['setup']
+    punchline = jokeReturn['punchline']
+    #print (sents[output.index(mostSimilar)],jokeReturn, mostSimilar*100)
+    return jsonify(message = f"I am {int(mostSimilar * 100)}% sure you meant {setup} and I already know that joke... {punchline}")
+
+# with cross origin
+# testing hugging face sentence transformer
 @app.route('/setup', methods=['POST'])
+@cross_origin()
 async def dothething():
     sents = await getAllSetups()
     data = request.form.get('setup')
