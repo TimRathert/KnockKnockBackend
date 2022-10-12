@@ -87,14 +87,15 @@ async def dothething():
 
 
 # Insert new joke
-@app.route('/insert-one/<setup>/<punchline>/', methods=['GET'])
-def insertOne(setup, punchline):
+@app.route('/newjoke', methods=['POST'])
+async def insertOne():
+    data = request.get_json(force=True)
     queryObject = {
         'user': 'Tim',
-        'setup': setup,
-		'punchline': punchline
+        'setup': data['setup'],
+		'punchline': data['punchline']
     }
-    query = jokes.insert_one(queryObject)
+    query = await jokes.insert_one(queryObject)
     return "Joke Added to Database"
 
 # seed stuff
