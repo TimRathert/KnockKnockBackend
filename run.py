@@ -3,7 +3,6 @@ from flask_cors import CORS, cross_origin
 import pymongo, json, os, asyncio, requests
 from bson.json_util import dumps
 from dotenv import load_dotenv
-import seed
 
 load_dotenv()
 
@@ -13,7 +12,7 @@ DEBUG = True
 PORT = os.environ.get("PORT")
 
 app = Flask(__name__)
-cors = CORS(app)
+CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 client = pymongo.MongoClient(db)
   
@@ -49,12 +48,12 @@ def home_view():
     return "<h1>Hello World!</h1>"
 
 @app.route('/receive', methods=['GET', 'POST'])
-@cross_origin() #what is this? it enables cors for all domains on this route
+#@cross_origin() #what is this? it enables cors for all domains on this route
 async def setup():
-    data = request.form.get('keys')
+    data = request.form.get('setup')
     print(data)
     #print(request)
-    return jsonify(message = 'hello world')
+    return jsonify(message = data)
 
 # Get all jokes
 @app.route('/jokes', methods=['GET'])
@@ -63,12 +62,13 @@ def find():
 	return parse_json(thing)
 
 # testing hugging face sentence transformer
-@app.route('/test/', methods=['GET'])
-async def dothething(setupInput):
+@app.route('/setup', methods=['POST'])
+async def dothething():
     sents = await getAllSetups()
+    data = request.form.get('setup')
     output = query({
 	"inputs": {
-		"source_sentence": setupInput,
+		"source_sentence": data,
 		"sentences": sents
 	    },
     })
