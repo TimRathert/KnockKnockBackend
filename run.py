@@ -95,8 +95,8 @@ async def insertOne():
         'setup': data['setup'],
 		'punchline': data['punchline']
     }
-    query = await jokes.insert_one(queryObject)
-    return "Joke Added to Database"
+    query = jokes.insert_one(queryObject)
+    return jsonify(message="Joke Added to Database")
 
 # seed stuff
 # Don't run this unless it's to reset the database lmao
