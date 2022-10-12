@@ -42,6 +42,12 @@ async def findPunchline(var):
 # routes here 
 
 # receive data
+
+
+@app.route('/', methods=['GET'])
+def home_view():
+    return "<h1>Hello World!</h1>"
+
 @app.route('/receive', methods=['GET', 'POST'])
 #@cross_origin() what is this?
 async def setup():
@@ -49,12 +55,7 @@ async def setup():
     print(data)
     #print(request)
     return jsonify(message = 'hello world')
-
-
-@app.route('/', methods=['GET'])
-def home_view():
-    return "<h1>Hello World!</h1>"
-
+    
 # Get all jokes
 @app.route('/jokes', methods=['GET'])
 def find():
