@@ -12,6 +12,7 @@ flask-cors = "*"
 python-dotenv = "*"
 flask = {extras = ["async"], version = "*"}
 gunicorn = "*"
+requests = "*"
 
 [dev-packages]
 
