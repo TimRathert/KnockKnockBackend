@@ -49,7 +49,7 @@ def home_view():
     return "<h1>Hello World!</h1>"
 
 @app.route('/receive', methods=['GET', 'POST'])
-#@cross_origin() what is this?
+@cross_origin() #what is this? it enables cors for all domains on this route
 async def setup():
     data = request.form.get('keys')
     print(data)
