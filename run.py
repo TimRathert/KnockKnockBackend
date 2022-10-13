@@ -81,7 +81,7 @@ async def dothething():
     setup = jokeReturn['setup']
     punchline = jokeReturn['punchline']
     #print (sents[output.index(mostSimilar)],jokeReturn, mostSimilar*100)
-    outString = f"I am {int(mostSimilar * 100)}% sure you meant {setup} and I already know that joke... {punchline}"
+    outString = f'I am {int(mostSimilar * 100)}% sure you meant "{setup}" and I already know that joke... "{punchline}"'
     return jsonify(message = outString)
 
 
